@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../theme/colors.dart';
 import '../theme/containers.dart';
+import 'mood_log.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -84,12 +86,12 @@ class HomeScreen extends StatelessWidget {
 
 
               /// HELLO TEXT
-              const Text(
+              Text(
                 "Hello, Thalia",
-                style: TextStyle(
+                style: GoogleFonts.inter(
                   fontSize: 32,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF2B2B2B),
+                  color: const Color(0xFF2B2B2B),
                   letterSpacing: -0.4,
                 ),
               ),
@@ -126,16 +128,16 @@ class HomeScreen extends StatelessWidget {
                         color: const Color(0xFFEAF7EC), // lighter green
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             Text(
                               "You should take your meds in",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF7FA891),
+                              style: GoogleFonts.inter(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: const Color(0xFF7FA891),
                               ),
                             ),
-                            Text(
+                            const Text(
                               "24 mins",
                               style: TextStyle(
                                 fontSize: 16,
@@ -255,6 +257,14 @@ class HomeScreen extends StatelessWidget {
                 imagePath : "assets/icons/ocean.png",
                 title: "Starting my day off right",
                 meta: "12 min    3 days",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const MyMoodsScreen(),
+                    ),
+                  );
+                },
               ),
 
               const SizedBox(height: 14),
@@ -263,7 +273,15 @@ class HomeScreen extends StatelessWidget {
                 imagePath : "assets/icons/smile.png",
                 title: "Today’s self check-in",
                 meta: "",
-                imageSize: 30
+                imageSize: 30,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const MyMoodsScreen(),
+                    ),
+                  );
+                },
               ),
 
               const SizedBox(height: 36),
@@ -335,68 +353,74 @@ class HomeScreen extends StatelessWidget {
     required String imagePath,
     required String title,
     required String meta,
-    /// NEW (optional)
+
+    /// NEW
+    required VoidCallback onTap,
+
     double imageSize = 44,
     double imageRadius = 12,
   }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
-      decoration: BoxDecoration(
-        color: const Color(0xFFEAF7EC),
-        borderRadius: BorderRadius.circular(22),
-      ),
-      child: Row(
-        children: [
+    return InkWell(
+      borderRadius: BorderRadius.circular(22),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
+        decoration: BoxDecoration(
+          color: const Color(0xFFEAF7EC),
+          borderRadius: BorderRadius.circular(22),
+        ),
+        child: Row(
+          children: [
 
-          /// IMAGE ICON (adjustable size)
-          Container(
-            height: imageSize,
-            width: imageSize,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(imageRadius),
+            /// IMAGE ICON
+            Container(
+              height: imageSize,
+              width: imageSize,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(imageRadius),
+              ),
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.contain,
+              ),
             ),
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.contain,
-            ),
-          ),
 
-          const SizedBox(width: 14),
+            const SizedBox(width: 14),
 
-          /// TEXT
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                if (meta.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      meta,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.black54,
-                      ),
+            /// TEXT
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-              ],
+                  if (meta.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        meta,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
             ),
-          ),
 
-          Icon(
-            Icons.chevron_right_rounded,
-            color: Color(0xFF9DB7A9), // soft sage green (matches your UI)
-            weight: 2,
-            size: 26,
-          ),
-        ],
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: Color(0xFF9DB7A9),
+              size: 26,
+            ),
+          ],
+        ),
       ),
     );
   }
