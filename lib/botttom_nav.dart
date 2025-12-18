@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adhd_app/screens/home_screen.dart';
+import 'package:adhd_app/screens/focus_screen.dart';
 import 'package:adhd_app/screens/profile_screen.dart';
 import 'package:adhd_app/theme/colors.dart';
 
@@ -15,16 +16,19 @@ class _MainNavigationState extends State<MainNavigation> {
 
   final List<Widget> _screens = const [
     HomeScreen(),
+    FocusScreen(),
     ProfilePage(),
   ];
 
   final List<IconData> _navIcons = [
     Icons.home_rounded,
+    Icons.lightbulb,
     Icons.person_rounded,
   ];
 
   final List<String> _navLabels = [
     "Home",
+    "Focus",
     "Profile",
   ];
 
@@ -34,8 +38,11 @@ class _MainNavigationState extends State<MainNavigation> {
       backgroundColor: const Color(0xFFFFFEFE),
       body: Stack(
         children: [
-          /// ACTIVE SCREEN
-          _screens[_currentIndex],
+          /// ✅ STATE-PRESERVING SCREEN SWITCH
+          IndexedStack(
+            index: _currentIndex,
+            children: _screens,
+          ),
 
           /// FLOATING BOTTOM NAV
           Positioned(
@@ -57,7 +64,7 @@ class _MainNavigationState extends State<MainNavigation> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(2, (index) {
+                children: List.generate(3, (index) {
                   final isActive = _currentIndex == index;
 
                   return GestureDetector(

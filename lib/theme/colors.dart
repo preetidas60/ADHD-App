@@ -10,6 +10,8 @@ class AppColors {
   static const Color primaryDark = Color(0xFF388E3C);  // Dark Green
   static const Color blueDark = Color(0xFF2D7FEA);  // Dark blue
   static const Color warmDark = Color(0xFFF8BB70);  // Dark blue
+  static const Color visibleGreen = Color(0xFF8EE4B7);      // Main Green
+
 
 
   // 🌱 Secondary / Accent
